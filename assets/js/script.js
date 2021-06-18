@@ -1,64 +1,175 @@
+// ARRAY OF QUESTIONS AND POSSIBLE ANSWERS (array within array) TO CHOOSE FROM. CORRECT ANSWER IS ALSO STORED HERE. 
 var questions = [
     {
-        question: "What is an array?",
-        answers: {
-            a: "mixed data contained within brackets",
-            b: "an application that relies heavily on javaScript",
-            c: "a newer javascript way of declaring a function",
-            d: "a type of conditional statement",
-            correct: "a",
-        },
-        // correctAnswer: "a"
+        questionPrompt: "What do we call mixed data contained within brackets?",
+        options: [
+            "function",
+            "array",
+            "API",
+            "arguement"],
+        theAnswer: "array",
     },
     {
-        question: "What is the purpose of a for loop?",
-        answers: {
-            a: "It helps us know how to define variables",
-            b: "It allows us to have the same operation done repetitively",
-            c: "Similar to commenting, it can help web developers to better understand code later on",
-            d: "It overwrites the function closest to it",
-            correct: "b",
-        },
-        // correctAnswer: "b"
+        questionPrompt: "Is Jquery needed to write code in JavaScript?",
+        options: [
+            "Yes",
+            "No",
+            "Sometimes",
+            "Unsure"],
+        theAnswer: "No",
     },
     {
-        question: "What does an arguement do?",
-        answers: {
-            a: "Catches and prevents any merge conflicts from happening",
-            b: "Declares a function",
-            c: "Runs the JS code before any HTML",
-            d: "Passes data into a function",
-            correct: "d",
-        },
-        // correctAnswer: "d"
+        questionPrompt: "What is something that passes data into a function?",
+        options: [
+            "arguement",
+            "bootstrap",
+            "jquery",
+            "pseudocode"],
+        theAnswer: "arguement",
     },
     {
-        question: "What is pseudocode?",
-        answers: {
-            a: "a term frequently used for the finished, or working code",
-            b: "a back-end programming language similar to JavaScript",
-            c: "a plain language description to help developers organize thoughts and plan before writing any actual code",
-            d: "a more user friendly way of writing JavaScript",
-            correct: "c",
-        },
-        // correctAnswer: "c"
+        questionPrompt: "What do we call a plain language description to help developers organize thoughts and plan before writing any actual code?",
+        options: [
+            "function",
+            "method",
+            "pseudocode",
+            "EventListener"],
+        theAnswer: "pseudocode",
     },
     {
-        question: "How can we write 'or' in JavaScript terms?",
-        answers: {
-            a: "||",
-            b: "===",
-            c: "&&",
-            d: "//",
-            correct: "a",
-        },
-        // correctAnswer: "a"
+        questionPrompt: "What does || mean in JavaScript?",
+        options: [
+            "and",
+            "else if",
+            "else",
+            "or"],
+        theAnswer: "or",
     },
-
 ];
 
+// STARTING VARIABLES 
+var currentQuestion;
+var correctAnswer;
+var questionLength = questions.length;
+var questionNum;
+
+
+// GRAB HTML ELEMENTS USING GETELEMENTBYID AND TARGETTING THE HTML ID IN ("")
+var homePage = document.getElementById("startPage");
+var startButton = document.getElementById("startButton");
+var quizEl = document.getElementById("quiz");
+var questionStat = document.getElementById("questionStat");
+var userStats = document.getElementById("lastPage");
+var tryAgainEl = document.getElementById("tryAgain");
+
+
+// this starts the timer if the user clicks the start button. When timer reaches 0, user is alerted
+function clock() {
+    var myTimer = setInterval(myClock, 1000);
+    var sec = 15;
+
+    function myClock() {
+        document.getElementById("startButton").innerHTML = --sec;
+        if (sec == 0) {
+            clearInterval(myTimer);
+            alert("Time is up but keep trying!");
+        }
+    }
+}
+
+
+// WHEN THE START BUTTON IS CLICKED, BEGIN THE GAME AND PREVENT THE DEFAULT BEHAVIOR OF START BUTTON 
+startButton.addEventListener("click", function (e) {
+    e.preventDefault();
+    startQuiz();
+});
+
+
+//FUNCTION TO START GAME. VARIABLES SET TO A DISPLAY OF NONE WILL NOT APPEAR AT THIS STAGE. 
+function startQuiz() {
+    homePage.style.display = "none";
+    quizEl.style.display = "block";
+    questionStat.style.display = "block";
+    userStats.style.display = "none";
+    tryAgainEl.style.display = "none";
+    questionNum = 0;
+    correctAnswer = 0;
+    showQuestion();
+}
+// FUNCTION THAT CLEARS OUT THIS SECTION SO IT IS NOW EMPTY 
+function clearSection() {
+    quizEl.innerHTML = "";
+}
+// FUNCTION TO DISPLAY QUESTION TO USER IN WHAT WAS OUR EMPTY CONTAINER 
+function showQuestion() {
+    clearSection();
+    currentQuestion = questions[questionNum];
+    var pos = questionNum + 1;
+    questionStat.textContent = "Question: " + pos + "/" + questionLength;
+    var question = document.createElement("h2");
+    question.textContent = currentQuestion.questionPrompt;
+    quizEl.appendChild(question);
+    showQuestionOptions();
+}
+// DISPLAY QUESTION CHOICES AND FOR LOOP TO GO THROUGH ARRAY OF QUESTIONS AND ANSWER OPTIONS 
+function showQuestionOptions() {
+    for (let i = 0; i < currentQuestion.options.length; i++) {
+        var choice = document.createElement("h4");
+        choice.setAttribute("class", "choiceBG");
+        choice.setAttribute("data-value", currentQuestion.options[i]);
+        choice.textContent = currentQuestion.options[i];
+        quizEl.appendChild(choice);
+    }
+}
+// EXECUTES FUNCTION ON CLICK, PREVENTS DEFAULT BEHAVIOR AND COMPARES ANSWERS 
+quizEl.addEventListener("click", function (e) {
+    e.preventDefault();
+    if (e.target.matches("h4")) {
+        var userAnswer = e.target.getAttribute("data-value");
+        compare(userAnswer);
+    }
+});
+// FUNCTION TO COMPARE USER ANSWERS. ALSO, IF USER CHOOSES THE CORRECT ANSWER, ADD IT TO THEIR # OF CORRECT ANSWERS 
+function compare(userAnswer) {
+    if (userAnswer === currentQuestion.theAnswer) {
+        correctAnswer++;
+        questionNum++;
+        tryAgainorNot();
+    } else {
+        questionNum++;
+        tryAgainorNot();
+    }
+}
+// IF ALL THE QUESTIONS ARE UP, DISPLAY THE STATS/RESULTS. OTHERWISE, GIVE THE NEXT QUESTION 
+function tryAgainorNot() {
+    if (questionNum === questionLength) {
+        showScore();
+    } else {
+        showQuestion();
+    }
+}
+// FUNCTION TO SHOW USER SCORE AT END OF GAME. ANYTHING SET TO A DISPLAY OF NONE WILL NOT APPEAR AT THIS TIME 
+function showScore() {
+    quizEl.style.display = "none";
+    questionStat.style.display = "none";
+    userStats.style.display = "block";
+    tryAgainEl.style.display = "block";
+    userStats.innerHTML = "";
+    var h2 = document.createElement(h2);
+    h2.textContent = "You Got " + correctAnswer + " out of " + questionLength;
+    userStats.appendChild(h2);
+    // CONSOLE LOG USER SCORE AND TRY TO STORE THEM IN LOCAL STORE (LOCAL STORAGE COMMENTED OUT BC I DID NOT GET IT TO WORK YET)
+    console.log(userStats);
+    // localStorage.setItem("highScore", "userStats");
+    // document.getElementById("highScore").innerHTML = localStorage.getItem("userStats");
+}
+// EVENT LISTENER LISTENING FOR CLICK ON TRY AGAIN BUTTON. IF USER CLICKS TRY AGAIN, QUIZ RESTARTS 
+tryAgainEl.addEventListener("click", function (e) {
+    e.preventDefault();
+    startQuiz();
+});
 
-var timer;
+var userScore = Number.userStats;
 
 
 
@@ -120,195 +231,195 @@ var timer;
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// // declare variables
-// var score = 0;
-// var userAnswer = "";
-// var currentQuestion = 0;
-// var questionMax = 5;
-// var questionList = 0;
-// var questionNumber = 0;
-
-
-// // access HTML elements using getelementbyid 
-// var mainContainer = document.getElementById("mainContainer");
-// var headerEl = document.getElementById("header");
-// var timerEl = document.getElementById("timer");
-// var nextButtonEl = document.getElementById("nextButton");
-
-// //questions array
+// var startScreen = document.getElementById("gameStart");
+// var startSelected = document.getElementById("start");
+// var currentQuestion = document.getElementById("questionNumber");
+// var playerChoices = document.getElementById("choices");
+// var gameWrapUp = document.getElementById("endOfGame");
+//correct answer counter
+// var playerScore = 0;
+// console.log("Hello")
+//Array of objects containing questions
+//and possible answers
 // var questions = [
 //     {
-//         question: "What is an array?",
-//         answers: {
-//             a: "mixed data contained within brackets",
-//             b: "an application that relies heavily on javaScript",
-//             c: "a newer javascript way of declaring a function",
-//             d: "a type of conditional statement",
-//             correct: "a",
-//         },
-//         // correctAnswer: "a"
+//         q: "Question to be answered with three listed choices",
+//         a: "answer", b: "answer", c: "answer",
+//         correct: "answermatch"
 //     },
-//     {
-//         question: "What is the purpose of a for loop?",
-//         answers: {
-//             a: "It helps us know how to define variables",
-//             b: "It allows us to have the same operation done repetitively",
-//             c: "Similar to commenting, it can help web developers to better understand code later on",
-//             d: "It overwrites the function closest to it",
-//             correct: "b",
-//         },
-//         // correctAnswer: "b"
-//     },
-//     {
-//         question: "What does an arguement do?",
-//         answers: {
-//             a: "Catches and prevents any merge conflicts from happening",
-//             b: "Declares a function",
-//             c: "Runs the JS code before any HTML",
-//             d: "Passes data into a function",
-//             correct: "d",
-//         },
-//         // correctAnswer: "d"
-//     },
-//     {
-//         question: "What is pseudocode?",
-//         answers: {
-//             a: "a term frequently used for the finished, or working code",
-//             b: "a back-end programming language similar to JavaScript",
-//             c: "a plain language description to help developers organize thoughts and plan before writing any actual code",
-//             d: "a more user friendly way of writing JavaScript",
-//             correct: "c",
-//         },
-//         // correctAnswer: "c"
-//     },
-//     {
-//         question: "How can we write 'or' in JavaScript terms?",
-//         answers: {
-//             a: "||",
-//             b: "===",
-//             c: "&&",
-//             d: "//",
-//             correct: "a",
-//         },
-//         // correctAnswer: "a"
-//     },
-
+//     {},
+//     {},
+//     {},
+//     {},
+//     {},
+//     {},
+//     {},
+//     {},
+//     {}
 // ];
-
-// //answers array 
-// var answerArray = ["a", "b", "c", "d", "correct"];
-
-
-// //when user clicks start, the timer starts and the first question is displayed
-// function clock() {
-//     var myTimer = setInterval(myClock, 1000);
-//     var sec = 30;
-
-//     function myClock() {
-//         document.getElementById("timer").innerHTML = --sec;
-//         if (sec == 0) {
-//             clearInterval(myTimer);
-//             alert("Time is up!");
-//         }
+// var playTheGame = function () {
+//     currentQuestion.style.display = "none";
+//     document.getElementById("start").addEventListener("click", function (event) {
+//         event.preventDefault();
+//         displayQuestion();
 //     }
+//     )
 // }
-// // for loops begin to loops through question and answer arrays 
-// for (i = 0; i < questions.length; i++) {
-
-//     if (currentQuestion < questions.length) {
-//         var userQuestion = document.createElement("h3");
-//         userQuestion.textContent = questions[currentQuestion].question;
-//         mainContainer.appendChild(userQuestion);
-
-//         for (var i = 0; i < answerLetters.length; i++) {
-//             var currentLetter = answerLetters[i];
-//             var answerChoices = document.createElement('button');
-//             answerChoices.classList.add('btn-success', 'btn', 'button')  //add button classes
-//             answerChoices.setAttribute("id", (i + 1));
-//             answerChoices.innerHTML = ((i + 1) + ". " + questions[questionNumber].answers[currentLetter]);
-//             // console.log(answerLetters[i]);
-//             questionBox.appendChild(answerChoices);
-//         }
+// playTheGame();
+//Display Question
+//How the questions and answers will be
+//presented to the user.
+//
+// var displayQuestion = function () {
+//     startScreen.style.display = "none";
+//     currentQuestion.style.display = "block";
+// };
+//Function to display questions and
+//choices to the screen
+//
+// var nextQuestion = function () {
+//     if (questions[i] < questions.length) {
+//         i++;
+//         return displayQuestion();
+//     } else {
+//         return gameOver();
 //     }
-// }
-//when the user clicks an answer, they can then hit the "next" button and a new question appears
+// };
+//Game Over
+//Will display the game over screen which will
+//detail the users score and allow for input
+//of their initials to local storage
+//
+// var gameOver = function () {
+// };
+// var questionTimer = function () {
+//     setTimeout(outOfTime, 10000);
+// };
 
-// keep track of correct user answers and incorrect user answers so we can display their results at the end 
 
 
-//when the user has answered all five questions, the timer stops upon hitting the "submit" button
-//the timer should also stop if user is out of time. 
 
 
-//once user has hit submit, they can then see their results 
 
 
-// user can see high scores and enter their initials si tiene high score 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

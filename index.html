@@ -1,111 +1,43 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-us">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Know JavaScript?</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-
-<body>
-    </head>
-
-    <body>
-        <div class="container">
-            <div id="home">
-                <h1>☕🐱‍💻 Do You Know Your JavaScript? 🐱‍💻☕</h1>
-
-            </div>
-        </div>
-        <script src="./assets/js/script.js"></script>
-
-    </body>
-
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Know Your JavaScript?</title>
 </head>
 
 <body>
-
-    <header id="header">
-        <h2>☕🐱‍💻 Do You Know Your JavaScript? Let's Find Out! 🐱‍💻☕</h2>
+    <header id="startPage">
+        <h1>🐱‍💻☕ Do You Know Your JavaScript? ☕🐱‍💻</h1>
+        <h2>Let's Find Out!</h2>
+        <p id="timer">15</p>
+        <button id="startButton" onclick="clock()">Start Quiz</button>
+        <button onclick="clearInterval(myTimer)">Submit</button>
     </header>
 
-    <div id="mainContainer">
-        <p id="timer">30</p>
-        <button onclick="clock()">Start Quiz</button>
-        <button id="nextButton">Next</button>
-        <button onclick="clearInterval(myTimer)">Submit</button>
 
+    <div class="container">
+
+        <h2 id="lastPage" style="display: none;">
+        </h2>
+        <button id="tryAgain" style="display: none;">Try Again</button>
+        <h2 id="questionStat" style="display: none;">
+
+        </h2>
+        <div id="quiz" style="display: none;">
+            <div id="highScore" style="display: none;"></div>
+
+        </div>
     </div>
 
 
-
     <script src="./assets/js/script.js"></script>
+
 </body>
 
-</html> -->
+
+
+</html>

@@ -1,15 +1,15 @@
-#header {
-    text-align: center;
-    background-color: teal;
-    color: red;
-    padding: 10px;
-    width: 100%;
-}
-
-#mainContainer {
+body {
+    background-color: rgb(197, 1, 109);
     display: flex;
     justify-content: center;
     align-items: center;
-  
+    flex-wrap: wrap;
+    color:seashell;
 
+}
+
+header h1, h2 {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(182, 214, 40);
 }
