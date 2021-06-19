@@ -54,7 +54,7 @@ var questionLength = questions.length;
 var questionNum;
 
 
-// GRAB HTML ELEMENTS USING GETELEMENTBYID AND TARGETTING THE HTML ID IN ("")
+// GRAB HTML ELEMENTS USING GETELEMENTBYID AND TARGET THE HTML ID IN ("")
 var homePage = document.getElementById("startPage");
 var startButton = document.getElementById("startButton");
 var quizEl = document.getElementById("quiz");
@@ -63,7 +63,7 @@ var userStats = document.getElementById("lastPage");
 var tryAgainEl = document.getElementById("tryAgain");
 
 
-// this starts the timer if the user clicks the start button. When timer reaches 0, user is alerted
+// this starts the timer if the user clicks the start button. When timer reaches 0, user is alerted "Time is up but keep trying!"
 function clock() {
     var myTimer = setInterval(myClock, 1000);
     var sec = 15;
@@ -104,8 +104,8 @@ function clearSection() {
 function showQuestion() {
     clearSection();
     currentQuestion = questions[questionNum];
-    var pos = questionNum + 1;
-    questionStat.textContent = "Question: " + pos + "/" + questionLength;
+    var loc = questionNum + 1;
+    questionStat.textContent = "Question: " + loc + "/" + questionLength;
     var question = document.createElement("h2");
     question.textContent = currentQuestion.questionPrompt;
     quizEl.appendChild(question);
@@ -156,7 +156,7 @@ function showScore() {
     tryAgainEl.style.display = "block";
     userStats.innerHTML = "";
     var h2 = document.createElement(h2);
-    h2.textContent = "You Got " + correctAnswer + " out of " + questionLength;
+    h2.textContent = "You Scored " + correctAnswer + " out of " + questionLength;
     userStats.appendChild(h2);
     // CONSOLE LOG USER SCORE AND TRY TO STORE THEM IN LOCAL STORE (LOCAL STORAGE COMMENTED OUT BC I DID NOT GET IT TO WORK YET)
     console.log(userStats);
@@ -169,132 +169,8 @@ tryAgainEl.addEventListener("click", function (e) {
     startQuiz();
 });
 
-var userScore = Number.userStats;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// var startScreen = document.getElementById("gameStart");
-// var startSelected = document.getElementById("start");
-// var currentQuestion = document.getElementById("questionNumber");
-// var playerChoices = document.getElementById("choices");
-// var gameWrapUp = document.getElementById("endOfGame");
-//correct answer counter
-// var playerScore = 0;
-// console.log("Hello")
-//Array of objects containing questions
-//and possible answers
-// var questions = [
-//     {
-//         q: "Question to be answered with three listed choices",
-//         a: "answer", b: "answer", c: "answer",
-//         correct: "answermatch"
-//     },
-//     {},
-//     {},
-//     {},
-//     {},
-//     {},
-//     {},
-//     {},
-//     {},
-//     {}
-// ];
-// var playTheGame = function () {
-//     currentQuestion.style.display = "none";
-//     document.getElementById("start").addEventListener("click", function (event) {
-//         event.preventDefault();
-//         displayQuestion();
-//     }
-//     )
-// }
-// playTheGame();
-//Display Question
-//How the questions and answers will be
-//presented to the user.
-//
-// var displayQuestion = function () {
-//     startScreen.style.display = "none";
-//     currentQuestion.style.display = "block";
-// };
-//Function to display questions and
-//choices to the screen
-//
-// var nextQuestion = function () {
-//     if (questions[i] < questions.length) {
-//         i++;
-//         return displayQuestion();
-//     } else {
-//         return gameOver();
-//     }
-// };
-//Game Over
-//Will display the game over screen which will
-//detail the users score and allow for input
-//of their initials to local storage
-//
-// var gameOver = function () {
-// };
-// var questionTimer = function () {
-//     setTimeout(outOfTime, 10000);
-// };
 
 
 
