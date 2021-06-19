@@ -158,8 +158,14 @@ function showScore() {
     var h2 = document.createElement(h2);
     h2.textContent = "You Scored " + correctAnswer + " out of " + questionLength;
     userStats.appendChild(h2);
-    // CONSOLE LOG USER SCORE AND TRY TO STORE THEM IN LOCAL STORE (LOCAL STORAGE COMMENTED OUT BC I DID NOT GET IT TO WORK YET)
-    console.log(userStats);
+
+    // CONSOLE LOG USER SCORE AND TRY TO STORE THEM IN LOCAL STORAGE (Still an issue but it logs something, just not what I want)
+    console.log(h2.textContent);
+    document.querySelector("h2", userStats);
+    localStorage.setItem("h2", userStats);
+    localStorage.getItem("h2", userStats);
+   
+    // COMMENTED OUT BECAUSE THESE ARE NOT CORRECT
     // localStorage.setItem("highScore", "userStats");
     // document.getElementById("highScore").innerHTML = localStorage.getItem("userStats");
 }
